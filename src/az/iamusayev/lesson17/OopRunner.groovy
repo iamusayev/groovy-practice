@@ -1,8 +1,5 @@
 package az.iamusayev.lesson17
 
-import java.sql.Connection
-import java.sql.DriverManager
-
 class OopRunner {
     static void main(String[] args) {
         def student = new Student()
@@ -12,8 +9,10 @@ class OopRunner {
         println student.'firstName'
         println student.@firstName  // not recommended
 
-        def student1 = new Student(firstName: "Petr", lastName: "Petrov", age: 18)
+        def student1 = new Student(firstName: "Petr", lastName: "Petrov", age: 18, id: 222)
         println student1
+
+        student1.properties.each{print it}
 
         Student student2 = ['Sveta', 'Svetikova', 30]
         println student2
@@ -22,20 +21,19 @@ class OopRunner {
         println fn
         println ln
 
+        println student1
+
         assert [student1, student2].collect { it.firstName } == ['Petr', 'Sveta']
         assert [student1, student2]*.firstName == ['Petr', 'Sveta']
 
-
         String.mixin(OopRunner.class)
+
         "Ivan".printStr()
 
-        Connection.mixin(OopRunner.class)
-
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres")
-        connection.printStr("Hey everyone")
     }
 
-    static def printStr(String self) {
+    static def printStr(String self){
         println "It's mixin $self"
     }
+
 }

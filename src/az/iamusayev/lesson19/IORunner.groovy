@@ -3,30 +3,34 @@ package az.iamusayev.lesson19
 import groovy.io.FileType
 
 class IORunner {
-
     static void main(String[] args) {
-        def file = new File("README.md")
-        println file.text
+        def file = new File("groovy-practice.iml ")
+        def text = file.text
+        println text
 
-        file.each { line -> println line }
+        file.each { line -> print line }
+
         file.withInputStream {
             def allText = new String(it.readAllBytes())
-            println allText
+            print allText
         }
-        def writer = new StringWriter()
-        try (def reader = file.newReader()) {
-            writer << reader
-        }
-
-        //write
         def file2 = new File("text.txt")
         file2.text = "Some text"
-        file2 << "New Line" << System.lineSeparator()
-//    file2.withOutputStream {}
-//    file2.newOutputStream()
+        file2 << "New line" << System.lineSeparator()
+        try (def reader = file.newReader()) {
+            file2 << reader
+        }
+//        file2.withOutputStream {}
+//        file2.newOutputStream()
+
         def srcDir = new File("src")
-//        srcDir.eachDir { println it}
-//        srcDir.eachDirRecurse { println it}
-        srcDir.eachFile { FileType.FILES }
+        srcDir.eachDirRecurse {
+
+        }
+        srcDir.eachDirRecurse (FileType.FILES){
+            println it
+        }
     }
 }
+
+

@@ -23,7 +23,18 @@ class MapRunner {
         assert map.subMap("one", "two") == [one: 111, "two": 2]
 
 //        new operator
-        def newMap = ["q": 22, "rt": 99, *:map]
+        def newMap = ["q": 22, "rt": 99, *: map]
         println newMap
+
+        def student = new Student("Ivan")
+        def each = student.any { it -> it.name == "Ivan" }
+        println each
+        List<Student> users = [new Student("Anar"), new Student("Islam")]
+
+        for(value in users){
+            value.name = "Ivan"
+        }
     }
+
+
 }

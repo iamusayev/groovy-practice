@@ -1,23 +1,18 @@
 package az.iamusayev.lesson17
 
-import groovy.transform.ToString
-import groovy.transform.TupleConstructor
-
-
-@ToString
-@TupleConstructor
+@groovy.transform.ToString
+@groovy.transform.TupleConstructor
 //@Mixin(WithId) //Deprecated
 
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.Sortable
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 import groovy.transform.builder.Builder
 
 @ToString
 @TupleConstructor
-@EqualsAndHashCode
-//@Canonical
-//@Immutable
+
 @Builder
 //@Slf4j
 //@Mixin(WithId.class)
@@ -26,8 +21,31 @@ class Student implements WithId {
     String lastName
     Integer age
 
-    def getAt(Integer index) {
-        index == 0 ? firstName : lastName
+    static void main(String[] args) {
+        def student = Student.builder()
+                .firstName("Ivan")
+                .lastName("Ivanov")
+                .build();
+
+        def objects = new TreeSet<>()
+        objects.add(new Student("", "", 11))
+        objects.add(student)
+
+        println objects
+    }
+
+
+    def methodMissing(String name, Object arguments){
+        println "missing method $name is invoked: $arguments"
+        def field = name - 'findBy'
+        def fieldValue = this."$field"
+        println "select * from Student where $field = $fieldValue"
+    }
+
+
+    def propertyMissing(String property){
+        println "property $property invoked"
+    "default value"
     }
 
     def methodMissing(String name, Object arguments) {

@@ -4,6 +4,6 @@ trait WithId {
     Integer id
 
     boolean validateId() {
-        id > 0
+        id > 0 
     }
 }
